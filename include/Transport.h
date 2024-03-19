@@ -10,10 +10,10 @@ public:
 
     Transport(const std::string& name);
 
-    bool is_open() const;
-    std::string open_error() const;
-    size_t use_count() const;
-    bool is_same(const Transport& other);
+    bool is_open() const    { return open_fail_desc.empty(); }
+    std::string open_error() const { return open_fail_desc; }
+    size_t use_count() const { if (pImpl) return pImpl.use_count(); return 0; }
+    bool is_same(const Transport& other) const { return this->pImpl == other.pImpl; }
 
     std::string process(const std::string& arg);
 

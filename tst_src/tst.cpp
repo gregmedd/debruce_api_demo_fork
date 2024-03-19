@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
 
     {
         Transport handle1("handle1");
+        cout << "handle1.is_open()=" << handle1.is_open() << endl;
         cout << handle1.process("a") << endl;
         cout << handle1.process("b") << endl;
 
@@ -50,6 +51,10 @@ int main(int argc, char *argv[])
         MyCallable policy1(1), policy2(2);
         handle3.process_with_callable(policy1);
         handle3.process_with_callable(policy2);
+
+        Transport handle4("fail");
+        cout << "handle4.is_open()=" << handle4.is_open() << endl;
+        cout << "handle4.open_error()=" << handle4.open_error() << endl;
     }
 
     cout << "bottom of main" << endl;

@@ -42,28 +42,6 @@ Transport::Transport(const string& name) : pImpl(new Impl(open_fail_desc, name))
 {
 }
 
-
-bool Transport::is_open() const
-{
-    return nullptr != pImpl;
-}
-
-string Transport::open_error() const
-{
-    return open_fail_desc;
-}
-
-size_t Transport::use_count() const
-{
-    if (pImpl) return pImpl.use_count();
-    return 0;
-}
-
-bool Transport::is_same(const Transport& other)
-{
-    return this->pImpl == other.pImpl;
-}
-
 string Transport::process(const string& arg)
 {
     return pImpl->process(arg);
