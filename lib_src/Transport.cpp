@@ -4,41 +4,51 @@
 
 using namespace std;
 
-struct Transport::Impl {
-    string data;
-    size_t  counter;
+// struct Transport::Impl {
+//     Impl(string& fail_desc, const string& name) = 0;
+//     virtual ~Impl() = 0;
 
-    inline Impl(string& fail_desc, const string& name) {
-        if (name == "fail") {
-            fail_desc = "got fail for name";
-            return;
-        }
+//     virtual string process(const string& arg) = 0;
+//     virtual void process_with_callable(function<Uuid (size_t)> func);
+// };
 
-        data = name;
-        counter = 0;
-        cout << __PRETTY_FUNCTION__ << ' ' << data << ' ' << counter << endl;
-    }
+// struct Transport::Impl {
+//     string data;
+//     size_t  counter;
 
-    inline ~Impl()
-    {
-        cout << __PRETTY_FUNCTION__ << ' ' << data << ' ' << counter << endl;
-    }
+//     inline Impl(string& fail_desc, const string& name) {
+//         if (name == "fail") {
+//             fail_desc = "got fail for name";
+//             return;
+//         }
 
-    inline string process(const string& arg)
-    {
-        stringstream ss;
-        ss << data << '+' << arg << '+' << counter;
-        counter++;
-        return ss.str();
-    }
+//         data = name;
+//         counter = 0;
+//         cout << __PRETTY_FUNCTION__ << ' ' << data << ' ' << counter << endl;
+//     }
 
-    inline void process_with_callable(function<Uuid (size_t)> func)
-    {
-        cout << __PRETTY_FUNCTION__ << " got " << func(345) << " from callable" << endl;
-    }
-};
+//     inline ~Impl()
+//     {
+//         cout << __PRETTY_FUNCTION__ << ' ' << data << ' ' << counter << endl;
+//     }
 
-Transport::Transport(const string& name) : pImpl(new Impl(open_fail_desc, name))
+//     inline string process(const string& arg)
+//     {
+//         stringstream ss;
+//         ss << data << '+' << arg << '+' << counter;
+//         counter++;
+//         return ss.str();
+//     }
+
+//     inline void process_with_callable(function<Uuid (size_t)> func)
+//     {
+//         cout << __PRETTY_FUNCTION__ << " got " << func(345) << " from callable" << endl;
+//     }
+// };
+
+std::shared_ptr<Transport::Impl> TransportImpl_factory(string& fail_desc, const string& name);
+
+Transport::Transport(const string& name) : pImpl(TransportImpl_factory(open_fail_desc, name))
 {
 }
 

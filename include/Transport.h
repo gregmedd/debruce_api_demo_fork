@@ -6,6 +6,7 @@
 
 class Transport {
 public:
+    struct Impl;
     typedef std::string Uuid;
 
     Transport(const std::string& name);
@@ -18,8 +19,14 @@ public:
     std::string process(const std::string& arg);
 
     void process_with_callable(std::function<Uuid (size_t)>);
+
+    static void force_inst();
 private:
     std::string open_fail_desc;
-    struct Impl;
     std::shared_ptr<Impl> pImpl;
+};
+
+struct Transport::Impl {
+    virtual std::string process(const std::string& arg) = 0;
+    virtual void process_with_callable(std::function<Transport::Uuid (size_t)> func) = 0;
 };
